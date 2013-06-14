@@ -1,6 +1,6 @@
-<div class ='lable'><p>Data Selector</p></div>
+
 <div class ='timerCont'>
-	<select class= 'start' id='menualstart'><option>Start Time </option> </select><br/>
+	<select class= 'start' id='menualstart'><option>Start Time </option> </select>
 	<select class= 'end' id='menualend'><option>End Time </option> </select>
 </div>
 <div class='clear'></div>

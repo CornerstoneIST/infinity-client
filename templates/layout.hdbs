@@ -5,6 +5,4 @@
 <div class = 'timeEntry'/>
 
 <section data-main />
-
-
- <button type="submit" class="btn target">Target</button>
+ <button type="submit" class="btn target">Submit Entry</button>

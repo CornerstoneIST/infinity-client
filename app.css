@@ -26,7 +26,6 @@ li + li {
 .menualTimer,.automaticTimer{display: none;}
 .taskTitle{ margin:  20px 0;}
 .lable{width: 30%; float: left;}
-.timerCont{ width: 70%; text-align: left; float: right; }
 .disabledMenual{display: none;}
 .menual, .automatic ,.disabledMenual{background-color:#95be22; height: 20px; padding: 5px; color:#FFF; cursor: pointer; margin: 10px 0; border-radius: 5px;}
 .menual:hover, .automatic:hover{background-color: #78a300;}
