@@ -1,0 +1,30 @@
+{
+  "app": {
+   "description": "Access bookmarked tickets from our iPad & iPhone app",
+   "name":        "Example Bookmarks",
+    "description": "Search",
+    "title": "Search"
+  },
+
+  "global": {
+    "error": {
+      "title"     : "An error occurred",
+      "message"   : "Please try the previous action again."
+    },
+    "loading"     : "Initialising app...",
+    "no_results"  : "No results found."
+  },
+  
+  "ticket": {
+    "id"      : "ID",
+    "subject" : "SUBJECT"
+  },
+
+  "add": {
+    "done":   "Bookmarked ticket #{{id}}",
+    "failed": "Failed to bookmark ticket #{{id}}"
+  },
+
+  "bookmark_this_ticket": "Bookmark This Ticket",
+  "none":                 "No bookmarks"
+}

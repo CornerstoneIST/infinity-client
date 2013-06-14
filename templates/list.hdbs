@@ -1,0 +1,16 @@
+<div class='autoTimer'>
+
+<form class="form-search">
+  <div class="input-append">
+    <input type="text" class="span2 search-query">
+    <button type="submit" class="btn seaarch">Search</button>
+  </div>
+</form>
+
+ <div>{{data.userName}} / {{ticket.subject}}</div>
+ <div class='manualTime'>
+  <div class='inlineBlock'><p>Date Selecto</p></div>
+  <div class='inlineBlock timeCont'>
+  </div>
+ </div>
+</div>

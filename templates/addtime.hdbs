@@ -1,0 +1,18 @@
+<div class='disabledMenual'>
+   <div><p>Manual Time Entry </p></div>
+</div>
+
+<div class='menual'>
+   <div><p>Manual Time Entry </p></div>
+</div>
+
+
+<input type ='hidden' class='startTime' />
+<input type ='hidden' class='endTime' />
+
+<div class='menualTimer'></div>
+
+<div class='automatic'>
+   <div><p>Automatic Time Entry</p></div>
+</div>
+<div class='automaticTimer'></div>

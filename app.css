@@ -1,0 +1,44 @@
+h3 {
+  line-height: 30px;
+}
+
+.logo {
+  background-image: app-asset-url("logo-small.png");
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  float: right;
+  height: 25px;
+  width: 25px;
+}
+
+li + li {
+  margin-top: 0.4em;
+}
+.inlineBlock{
+	display: inline-block;
+}
+.floatL{float: left;}
+.floatR{float:right;}
+.clear{clear: both;}
+.result { margin-top: 20px;}
+.droIcon{background-image: app-asset-url("icon_dropdown.png"); width: 17px; height: 17px;}
+.menualTimer,.automaticTimer{display: none;}
+.taskTitle{ margin:  20px 0;}
+.lable{width: 30%; float: left;}
+.timerCont{ width: 70%; text-align: left; float: right; }
+.disabledMenual{display: none;}
+.menual, .automatic ,.disabledMenual{background-color:#95be22; height: 20px; padding: 5px; color:#FFF; cursor: pointer; margin: 10px 0; border-radius: 5px;}
+.menual:hover, .automatic:hover{background-color: #78a300;}
+.disabledMenual, .disabledMenual :hover{background-color: #DFF0D8 !important; color:#78a300;}
+select.start,select.end { border: 1px solid #CCC !important; width: 100px; margin: 5px;}
+.hour{background-color:#F4F4F4;  border-radius: 15px;  width: 50px; float: right;text-align: center; padding: 5px; border: 1px solid #C7C7C7; margin-top: -5px;}
+.timeentryCont{margin: 10px 0;}
+.timeentryCont .desc{ display: inline-block; float: left;width: 215px;}
+.timeentryCont .hourcont{ float: left; display: inline-block;}
+.icones{float: right;}
+.edit{  float: left;height: 16px;width: 16px;}
+.remove{float: left;height: 16px;width: 16px;}
+
+.enter{ float: right;}
+.enter a{height: 12px; margin: 5px;}

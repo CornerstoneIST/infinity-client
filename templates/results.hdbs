@@ -1,0 +1,31 @@
+{{#if results.length}}
+  
+    {{#each results}}
+      <div div class='result'>
+      	<div class='taskTitle'>
+	      <p class='username inlineBlock'></p>
+	      <a href="#/tickets/{{this.id}}">{{this.subject}}</a>
+	  	</div>
+    	<div class='menual'>
+    		<img src='../assets/logo.png'/>
+    		<div><span class='droIcon'></span><p>Menual Time </p></div>
+    	</div>
+    	<div class='menualTimer'></div>
+    	
+      </div>
+    {{/each}}
+
+{{else}}
+  {{t "global.no_results"}}
+{{/if}}
+<script type="text/javascript">
+	$(function(){
+		$('.menual').click(function(){
+			if($('.menualTimer').is(':hidden')){
+				$('.menualTimer').slideDown("slow");
+			}else{
+				$('.menualTimer').hide();
+			}
+		})
+	})
+</script>

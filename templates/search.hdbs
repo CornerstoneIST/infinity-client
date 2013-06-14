@@ -1,0 +1,5 @@
+<form>
+  <input class="search-box" type="text"/>
+  <input type="submit" class="btn search-btn"/>
+</form>
+<div class="results"></div>
