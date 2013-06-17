@@ -1,9 +1,14 @@
 {{#if entryData.length}}
 {{#each entryData}}
-<div class='timeentryCont'>
-	<div class ='desc'><p>{{this.notes}}</p></div>
+<div class='timeentryCont' id='{{this.id}}'>
+	<div class ='desc'>
+		<p>{{this.notes}}</p>
+		<textarea >{{this.notes}} </textarea>
+	</div>
+	
 	<div class ='hourcont'>
 		<div class='hour'>{{this.hour}}</div>
+		<input type='text' value = '{{this.hour}}'>
 	</div>
 	<div class='icones'>
 		<span class='edit'><i class="icon-edit"></i></span>
@@ -12,5 +17,47 @@
 	<div class='clear'/>
 </div>
  {{/each}}
+ 
  {{/if}}
 <div class='clear'/>
+<script>
+$(function(){
+
+	$(window).click(function() {
+       $('.timeentryCont textarea').hide();
+       $('.timeentryCont input').hide();
+       $('.timeentryCont p').show();
+       $('.edited .hour').text($('.edited input').val());
+       $('.timeentryCont .hour').show();
+    });
+
+	$('.timeentryCont').each(function(){
+		$(this).find('p').click(function(event){
+			event.stopPropagation();
+			$('.edited').removeClass('edited');
+			$(this).parent().parent().addClass('edited');
+			$(this).hide();
+			$(this).next().show();
+		})
+		$(this).find('.hour').click(function(event){
+			event.stopPropagation();
+			$('.edited').removeClass('edited');
+			$(this).parent().parent().addClass('edited');
+			$(this).hide();
+			$(this).next().show();
+		})
+		
+	});
+
+	$('textarea').click(function(ev){
+		ev.stopPropagation();
+	});
+	$('input').click(function(ev){
+		ev.stopPropagation();
+	});
+
+	
+	
+})
+
+</script>

@@ -3,6 +3,7 @@ var customFields = [];
 var assigneeUserId =null;
 var workData = {};
 var timeEntryType='';
+var updateTaimeEntry ={};
   return {
 
     defaultState: 'loading',
@@ -59,6 +60,18 @@ var timeEntryType='';
          return {
           contentType: 'application/json',
           url: 'http://195.250.88.93:8081/getAutoTimeEntry?'+data,
+          type: 'GET',
+          dataType: "json"
+         
+        };
+      },
+
+      updateTimeEntry:function(){
+
+         var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour +'&note='+updateTaimeEntry.note + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id();
+         return {
+          contentType: 'application/json',
+          url: 'http://195.250.88.93:8081/updateTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -167,12 +180,13 @@ var timeEntryType='';
 
       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:data});
          this.$('.timeEntry').append(timeEntryTemplate);
+         this._editTimeEntryData();
+        
     },
 
     handleGetAutoTimeEntry:function(data){
        var automaticTemplate = this.renderTemplate('automatic',{interval:15, startTime: data.startTime, notes: data.notes});
       this.$('.automaticTimer').append(automaticTemplate);
-      console.log(data);
 
     },
     
@@ -272,6 +286,21 @@ var timeEntryType='';
        else alert('check start and end times!');
 
         
+    },
+    _editTimeEntryData:function(){
+   var self = this;
+     self.$('.timeentryCont input').change(function(){
+    
+        updateTaimeEntry.hour = self.$('.edited input').val();
+        updateTaimeEntry.note = self.$('.edited textarea').val();
+        updateTaimeEntry.id = self.$('.edited').attr('id');
+        self.$('.edited input').hide();
+        self.$('.edited .hour').text(updateTaimeEntry.hour);
+        self.$('.edited .hour').show();
+        self.ajax('updateTimeEntry');
+      });
+
+     
     }
    
   };
