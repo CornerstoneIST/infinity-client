@@ -1,0 +1,10 @@
+	<div class = 'lable'><p>Work Type</p></div>
+	<div class = 'pull-left'>
+		<select>
+			<option > -</option>
+			<option value='onsite'> Onsite</option>
+			<option value='remote'> Remote</option>
+			<option value='bench'> Bench</option>
+		</select>
+	</div>
+</div>
