@@ -39,7 +39,8 @@ var updateTaimeEntry ={};
     
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
+         /* url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,*/
+          url: 'http://infinity-worker.herokuapp.com/ticketchanged?'+tiketData,
           type: 'GET'
         };
       },
@@ -48,7 +49,7 @@ var updateTaimeEntry ={};
         var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&taskID=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/saveAutoTimeEntry?'+data,
+          url: 'http://infinity-worker.herokuapp.com/saveAutoTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -59,7 +60,7 @@ var updateTaimeEntry ={};
          var data = 'taskID=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/getAutoTimeEntry?'+data,
+          url: 'http://infinity-worker.herokuapp.com/getAutoTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -71,7 +72,7 @@ var updateTaimeEntry ={};
          var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour +'&note='+updateTaimeEntry.note + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id() +'&startTime='+updateTaimeEntry.startTime + '&endTime=' + updateTaimeEntry.endTime ;
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/updateTimeEntry?'+data,
+          url: 'http://infinity-worker.herokuapp.com/updateTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -81,7 +82,7 @@ var updateTaimeEntry ={};
         var data = 'unserName='+this.currentUser().email()+'&task_id=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/timeEntry?'+data,
+          url: 'http://infinity-worker.herokuapp.com/timeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
