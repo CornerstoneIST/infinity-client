@@ -9,10 +9,9 @@
 	<div class ='hourcont'>
 		<div class='hour'>{{this.hour}}</div>
 		<input type='text' value = '{{this.hour}}'>
-	</div>
-	<div class='icones'>
-		<span class='edit'><i class="icon-edit"></i></span>
-		<span class='remove'><i class=" icon-remove"></i></span>
+		<select class= 'updateStart' ></select><br/>
+		<select class= 'updateEnd' ></select><br/>
+		<button class="btn updateDate pull-right" type="button">Update</button>
 	</div>
 	<div class='clear'/>
 </div>
@@ -25,10 +24,10 @@ $(function(){
 
 	$(window).click(function() {
        $('.timeentryCont textarea').hide();
-       $('.timeentryCont input').hide();
-       $('.timeentryCont p').show();
-       $('.edited .hour').text($('.edited input').val());
-       $('.timeentryCont .hour').show();
+       //$('.timeentryCont input').hide();
+        $('.timeentryCont p').show();
+      // $('.edited .hour').text($('.edited input').val());
+      // $('.timeentryCont .hour').show();
     });
 
 	$('.timeentryCont').each(function(){
@@ -40,11 +39,12 @@ $(function(){
 			$(this).next().show();
 		})
 		$(this).find('.hour').click(function(event){
-			event.stopPropagation();
+			//event.stopPropagation();
 			$('.edited').removeClass('edited');
 			$(this).parent().parent().addClass('edited');
 			$(this).hide();
-			$(this).next().show();
+			$('.edited select').show();
+			$('.edited button').show();
 		})
 		
 	});
@@ -52,9 +52,7 @@ $(function(){
 	$('textarea').click(function(ev){
 		ev.stopPropagation();
 	});
-	$('input').click(function(ev){
-		ev.stopPropagation();
-	});
+
 
 	
 	

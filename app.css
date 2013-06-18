@@ -45,3 +45,6 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
 .timeentryCont textarea{width: 170px; display: none;}
 .timeentryCont p{cursor: pointer;}
 .timeentryCont .hour{cursor: pointer;}
+.updateStart, .updateEnd,.updateDate{display: none;}
+.updateDate {  margin: 10px 0;}
+.edited select{border:1px solid #C7C7C7 !important ; margin-bottom: 5px !important;}

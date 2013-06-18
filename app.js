@@ -68,7 +68,7 @@ var updateTaimeEntry ={};
 
       updateTimeEntry:function(){
 
-         var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour +'&note='+updateTaimeEntry.note + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id();
+         var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour +'&note='+updateTaimeEntry.note + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id() +'&startTime='+updateTaimeEntry.startTime + '&endTime=' + updateTaimeEntry.endTime ;
          return {
           contentType: 'application/json',
           url: 'http://195.250.88.93:8081/updateTimeEntry?'+data,
@@ -99,6 +99,7 @@ var updateTaimeEntry ={};
       'click .target': 'appTarget',
       'target.fail': 'handleTargetFail',
       'getAutoTimeEntry.done':'handleGetAutoTimeEntry',
+      'click .updateDate':'updateDate',
 
       '*.changed': function(data) {
          var propertyName = data.propertyName;
@@ -129,7 +130,9 @@ var updateTaimeEntry ={};
       var menualTemplate = this.renderTemplate('menual',{});
       this.$('.menualTimer').append(menualTemplate);
 
-      this._addOptions(15);
+      this.$('.start').html('<option>Start Time </option>'+this._addOptions(15));
+      this.$('.end').html('<option value="end">End Time </option>'+this._addOptions(15));
+
       this.ajax('getAutoTimeEntry');
     },
 
@@ -170,18 +173,45 @@ var updateTaimeEntry ={};
           }
           else{
             timeEntryType = 'menual';
+
              this._timeEntry(this.$('.menualTimer textarea').val(),this.$('.startTime').val(), this.$('.endTime').val());
           }
        this.$('.automaticTimer').hide();
       this.$('.menualTimer').hide();  
     },
 
+    updateDate:function(){
+     
+      updateTaimeEntry.startTime = this.$('.edited .updateStart').val();
+      updateTaimeEntry.endTime = this.$('.edited .updateEnd').val();
+      updateTaimeEntry.hour = this._workHours( updateTaimeEntry.startTime, updateTaimeEntry.endTime);
+      updateTaimeEntry.note = this.$('.edited textarea').val();
+      updateTaimeEntry.id = this.$('.edited').attr('id');
+       
+      this.$('.edited .hour').text(updateTaimeEntry.hour);
+      this.$('.edited select').hide();
+      this.$('.edited button').hide();
+      this.$('.edited .hour').show();
+      this.ajax('updateTimeEntry');
+    },
     handleTimeEntry:function(data){
 
       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:data});
          this.$('.timeEntry').append(timeEntryTemplate);
-         this._editTimeEntryData();
-        
+         this.$('.updateStart').html(this._addOptions(15));
+         this.$('.updateEnd').html(this._addOptions(15));
+         var self = this;
+         self.$('.timeentryCont').each(function(){
+            for(var i = 0; i < data.length ; i++){
+              if(self.$(this).attr('id') == data[i].id){
+                if(data[i].startTime){
+                  self.$('#' +self.$(this).attr('id') +' .updateStart').val(data[i].startTime);
+                  self.$('#' +self.$(this).attr('id') +' .updateEnd').val(data[i].endTime);
+                }
+                break;
+              }
+            }
+         });
     },
 
     handleGetAutoTimeEntry:function(data){
@@ -215,8 +245,8 @@ var updateTaimeEntry ={};
            }
         }
       }
-      this.$('.start').html('<option>Start Time </option>'+str);
-      this.$('.end').html('<option value="end">End Time </option>'+str);
+      return str;
+     
     },
 
     _workHours: function(start, end){
@@ -286,11 +316,10 @@ var updateTaimeEntry ={};
        else alert('check start and end times!');
 
         
-    },
-    _editTimeEntryData:function(){
-   var self = this;
+    }
+   /* _editTimeEntryData:function(){
+     var self = this;
      self.$('.timeentryCont input').change(function(){
-    
         updateTaimeEntry.hour = self.$('.edited input').val();
         updateTaimeEntry.note = self.$('.edited textarea').val();
         updateTaimeEntry.id = self.$('.edited').attr('id');
@@ -301,7 +330,7 @@ var updateTaimeEntry ={};
       });
 
      
-    }
+    }*/
    
   };
 
