@@ -33,7 +33,7 @@ var updateTaimeEntry ={};
         }
         var timeEntryData = '';
         if(timeEntryType)
-            timeEntryData = '&workDescription='+workData.workDescription + '&startTime='+workData.startTime+'&endTime=' + workData.endTime+'&workHours='+workData.workHours;
+            timeEntryData = '&workDescription='+workData.workDescription + '&startTime='+workData.startTime+'&endTime=' + workData.endTime+'&workHours='+workData.workHours + '&taskName=' +workData.taskName;
 
         var tiketData = 'id='+this.ticket().id() +'&userEmail=' + this.currentUser().email() +'&assignee_id=' + assigneeUserId +'&custom_fields=' + customFieldsValue +'&subject=' + this.ticket().subject() +'&description=' + this.ticket().description() + '&timeEntryType='+timeEntryType + timeEntryData;
     
@@ -127,12 +127,15 @@ var updateTaimeEntry ={};
       this.ajax('showTimeEntry');
       this.switchTo('addtime');
 
+      var customefieldsTemplate = this.renderTemplate('customefields',{});
       var menualTemplate = this.renderTemplate('menual',{});
       this.$('.menualTimer').append(menualTemplate);
+      this.$('.customeFields').append(customefieldsTemplate);
 
       this.$('.start').html('<option>Start Time </option>'+this._addOptions(15));
       this.$('.end').html('<option value="end">End Time </option>'+this._addOptions(15));
 
+      
       this.ajax('getAutoTimeEntry');
     },
 
@@ -294,11 +297,14 @@ var updateTaimeEntry ={};
 
       if(start && end){
         var workHour =  this._workHours(start,end);
+        var taskName = this.$('.customeFields select').val();
+        alert(taskName);
         workData = {
           workHours: workHour,
           workDescription :desc,
           startTime: start,
-          endTime: end
+          endTime: end,
+          taskName: taskName
         };
 
 
@@ -312,25 +318,13 @@ var updateTaimeEntry ={};
          this.$('.startTime').val('');
          this.$('.endTime').val('');
          this.$('.menualTimer').hide();
+         this.$('.customeFields select').val('');
        }
        else alert('check start and end times!');
 
         
     }
-   /* _editTimeEntryData:function(){
-     var self = this;
-     self.$('.timeentryCont input').change(function(){
-        updateTaimeEntry.hour = self.$('.edited input').val();
-        updateTaimeEntry.note = self.$('.edited textarea').val();
-        updateTaimeEntry.id = self.$('.edited').attr('id');
-        self.$('.edited input').hide();
-        self.$('.edited .hour').text(updateTaimeEntry.hour);
-        self.$('.edited .hour').show();
-        self.ajax('updateTimeEntry');
-      });
-
-     
-    }*/
+  
    
   };
 
