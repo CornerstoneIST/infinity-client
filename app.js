@@ -26,6 +26,7 @@ var updateTaimeEntry ={};
          
         };
       },
+
       target: function(data){
         var customFieldsValue = '';
         for(var i=0; i < customFields.length; i++){
@@ -39,14 +40,14 @@ var updateTaimeEntry ={};
     
          return {
           contentType: 'application/json',
-         /* url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,*/
+         //url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
           url: 'http://infinity-worker.herokuapp.com/ticketchanged?'+tiketData,
           type: 'GET'
         };
       },
       
       saveAutoStartTime:function(){
-        var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&taskID=' + this.ticket().id();
+        var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&taskID=' + this.ticket().id() +'&taskName=' +this.$('.automaticTimer select').val();
          return {
           contentType: 'application/json',
           url: 'http://infinity-worker.herokuapp.com/saveAutoTimeEntry?'+data,
@@ -128,10 +129,11 @@ var updateTaimeEntry ={};
       this.ajax('showTimeEntry');
       this.switchTo('addtime');
 
-      var customefieldsTemplate = this.renderTemplate('customefields',{});
+     // var customefieldsTemplate = this.renderTemplate('customefields',{});
       var menualTemplate = this.renderTemplate('menual',{});
       this.$('.menualTimer').append(menualTemplate);
-      this.$('.customeFields').append(customefieldsTemplate);
+
+      //this.$('.customeFields').append(customefieldsTemplate);
 
       this.$('.start').html('<option>Start Time </option>'+this._addOptions(15));
       this.$('.end').html('<option value="end">End Time </option>'+this._addOptions(15));
@@ -181,7 +183,7 @@ var updateTaimeEntry ={};
              this._timeEntry(this.$('.menualTimer textarea').val(),this.$('.startTime').val(), this.$('.endTime').val());
           }
        this.$('.automaticTimer').hide();
-      this.$('.menualTimer').hide();  
+       this.$('.menualTimer').hide();  
     },
 
     updateDate:function(){
@@ -202,9 +204,12 @@ var updateTaimeEntry ={};
 
       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:data});
          this.$('.timeEntry').append(timeEntryTemplate);
+
          this.$('.updateStart').html(this._addOptions(15));
          this.$('.updateEnd').html(this._addOptions(15));
+
          var self = this;
+
          self.$('.timeentryCont').each(function(){
             for(var i = 0; i < data.length ; i++){
               if(self.$(this).attr('id') == data[i].id){
@@ -219,9 +224,11 @@ var updateTaimeEntry ={};
     },
 
     handleGetAutoTimeEntry:function(data){
-       var automaticTemplate = this.renderTemplate('automatic',{interval:15, startTime: data.startTime, notes: data.notes});
+      var automaticTemplate = this.renderTemplate('automatic',{interval:15, startTime: data.startTime, notes: data.notes});
       this.$('.automaticTimer').append(automaticTemplate);
-
+      var customefieldsTemplate = this.renderTemplate('customefields',{});
+      this.$('.customeFields').append(customefieldsTemplate);
+      this.$('.automaticTimer select').val(data.taskName);
     },
     
     handleTargetFail :function(data){
@@ -294,12 +301,13 @@ var updateTaimeEntry ={};
 
         return workH;
     },
+
     _timeEntry: function(desc,start,end,type){
 
       if(start && end){
         var workHour =  this._workHours(start,end);
-        var taskName = this.$('.customeFields select').val();
-        alert(taskName);
+        var taskName =(timeEntryType == 'auto')? this.$('.automaticTimer .customeFields select').val(): this.$('.menualTimer .customeFields select').val();
+        
         workData = {
           workHours: workHour,
           workDescription :desc,
@@ -308,12 +316,11 @@ var updateTaimeEntry ={};
           taskName: taskName
         };
 
-
-       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{notes:desc, hour:workHour}]});
+       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour}]});
          this.$('.timeEntry').prepend(timeEntryTemplate);
          this.ajax('target');
 
-         this.$('.menualTimer textarea').val('');
+         this.$('textarea').val('');
          this.$('#menualstart').val('start');
          this.$('#menualend').val('end');
          this.$('.startTime').val('');

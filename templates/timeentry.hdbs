@@ -2,8 +2,8 @@
 {{#each entryData}}
 <div class='timeentryCont' id='{{this.id}}'>
 	<div class ='desc'>
-		<p>{{this.notes}}</p>
-		<textarea >{{this.notes}} </textarea>
+		<p>{{this.taskName}}</p>
+		<textarea >{{this.taskName}} </textarea>
 	</div>
 	
 	<div class ='hourcont'>
@@ -26,8 +26,9 @@ $(function(){
        $('.timeentryCont textarea').hide();
        //$('.timeentryCont input').hide();
         $('.timeentryCont p').show();
-      // $('.edited .hour').text($('.edited input').val());
-      // $('.timeentryCont .hour').show();
+       $('.timeentryCont select').hide();
+       $('.timeentryCont button').hide();
+        $('.timeentryCont .hour').show();
     });
 
 	$('.timeentryCont').each(function(){
@@ -39,7 +40,11 @@ $(function(){
 			$(this).next().show();
 		})
 		$(this).find('.hour').click(function(event){
-			//event.stopPropagation();
+			event.stopPropagation();
+			$('.timeentryCont select').hide();
+			$('.timeentryCont button').hide();
+			$('.timeentryCont .hour').show();
+
 			$('.edited').removeClass('edited');
 			$(this).parent().parent().addClass('edited');
 			$(this).hide();
@@ -52,6 +57,13 @@ $(function(){
 	$('textarea').click(function(ev){
 		ev.stopPropagation();
 	});
+	$('select').click(function(ev){
+		ev.stopPropagation();
+	});
+	$('button').click(function(ev){
+		ev.stopPropagation();
+	});
+
 
 
 	
