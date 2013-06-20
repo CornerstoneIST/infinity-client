@@ -38,13 +38,13 @@
 		});
 
 		$('.startbtn').click(function(){
-			$('.autostart').html(getCurTime($('.interval').val()));
+			$('.autostart').html(getCurTime($('.interval').val()).time);
 			$(this).addClass('disabled');
 			$('.menual').hide();
 			$('.disabledMenual').show();
 		})
 		$('.endbtn').click(function(){
-			$('.autoend').html(getCurTime($('.interval').val()));
+			$('.autoend').html(getCurTime($('.interval').val()).time);
 			$('.startbtn').removeClass('disabled');
 			
 		})
@@ -54,10 +54,11 @@
 		}
 	})
 
-	getCurTime = function( interval){
+		getCurTime = function( interval){
 		var currentdate = new Date();
 			var h = (currentdate.getHours()>12)? currentdate.getHours() -12: currentdate.getHours();
-			var amPM = (currentdate.getHours()>=12)? 'pm': 'am';
+			var acth = h;
+
 			var submin =currentdate.getMinutes()%interval;
 			var m =(submin > interval/2)? currentdate.getMinutes() + 15 - submin : currentdate.getMinutes() - submin ;
 				if(m>=60){
@@ -65,8 +66,14 @@
 					m -=60; 
 				}
 				h = (h<10)? '0' + h : h;
+				acth = (acth<10)? '0' + acth : acth;
 				m = (m==0)? '00' : m;
+
+			var amPM = (h>=12)? 'pm': 'am';	
+			var actamPM = (acth>=12)? 'pm': 'am';	
+
 			var time = h + ':' + m + amPM;
-			return time;
+			var actualTime = acth + ':' + currentdate.getMinutes() + actamPM;
+			return {'time': time, 'actualTime': actualTime};
 	}
 </script>

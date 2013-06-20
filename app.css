@@ -50,3 +50,5 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
 .edited select{border:1px solid #C7C7C7 !important ; margin-bottom: 5px !important;}
 .customeFields select{border:1px solid #C7C7C7 !important ; width: 100px;}
 .customeFields .lable{width: 37%;}
+.timeentryCont .taskType .lable{display: none;}
+.timeentryCont select{border:1px solid #C7C7C7 !important ;}

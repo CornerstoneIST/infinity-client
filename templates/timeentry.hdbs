@@ -2,8 +2,9 @@
 {{#each entryData}}
 <div class='timeentryCont' id='{{this.id}}'>
 	<div class ='desc'>
-		<p>{{this.taskName}}</p>
-		<textarea >{{this.taskName}} </textarea>
+		<p class='taskName'>{{this.taskName}}</p>
+		<div class='taskType'></div>
+		<div class='clear'></div>
 	</div>
 	
 	<div class ='hourcont'>
@@ -21,48 +22,53 @@
 <div class='clear'/>
 <script>
 $(function(){
-
 	$(window).click(function() {
-       $('.timeentryCont textarea').hide();
+    	$('.timeentryCont select').hide();
        //$('.timeentryCont input').hide();
-        $('.timeentryCont p').show();
+       $('.timeentryCont p').show();
        $('.timeentryCont select').hide();
        $('.timeentryCont button').hide();
-        $('.timeentryCont .hour').show();
+       $('.timeentryCont .hour').show();
     });
 
 	$('.timeentryCont').each(function(){
-		$(this).find('p').click(function(event){
+		$(this).find('.taskName').click(function(event){
 			event.stopPropagation();
+			$('.timeentryCont .taskName').show();
+			$('.timeentryCont select').hide();
+			$('.timeentryCont button').hide();
+			
 			$('.edited').removeClass('edited');
 			$(this).parent().parent().addClass('edited');
+
 			$(this).hide();
-			$(this).next().show();
+			$('.edited .taskType select').show();
+
 		})
+
 		$(this).find('.hour').click(function(event){
 			event.stopPropagation();
+
 			$('.timeentryCont select').hide();
+			$('.timeentryCont .taskName').show();
 			$('.timeentryCont button').hide();
 			$('.timeentryCont .hour').show();
 
 			$('.edited').removeClass('edited');
 			$(this).parent().parent().addClass('edited');
+
 			$(this).hide();
-			$('.edited select').show();
+			$('.edited .hourcont select').show();
 			$('.edited button').show();
 		})
 		
 	});
 
-	$('textarea').click(function(ev){
-		ev.stopPropagation();
-	});
+	
 	$('select').click(function(ev){
 		ev.stopPropagation();
 	});
-	$('button').click(function(ev){
-		ev.stopPropagation();
-	});
+
 
 
 

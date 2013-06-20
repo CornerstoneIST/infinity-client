@@ -41,7 +41,7 @@ var updateTaimeEntry ={};
          return {
           contentType: 'application/json',
          //url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
-          url: 'http://infinity-worker.herokuapp.com/ticketchanged?'+tiketData,
+          url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
           type: 'GET'
         };
       },
@@ -50,7 +50,7 @@ var updateTaimeEntry ={};
         var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&taskID=' + this.ticket().id() +'&taskName=' +this.$('.automaticTimer select').val();
          return {
           contentType: 'application/json',
-          url: 'http://infinity-worker.herokuapp.com/saveAutoTimeEntry?'+data,
+          url: 'http://195.250.88.93:8081/saveAutoTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -61,7 +61,7 @@ var updateTaimeEntry ={};
          var data = 'taskID=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://infinity-worker.herokuapp.com/getAutoTimeEntry?'+data,
+          url: 'http://195.250.88.93:8081/getAutoTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -73,7 +73,7 @@ var updateTaimeEntry ={};
          var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour +'&note='+updateTaimeEntry.note + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id() +'&startTime='+updateTaimeEntry.startTime + '&endTime=' + updateTaimeEntry.endTime ;
          return {
           contentType: 'application/json',
-          url: 'http://infinity-worker.herokuapp.com/updateTimeEntry?'+data,
+          url: 'http://195.250.88.93:8081/updateTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -83,7 +83,7 @@ var updateTaimeEntry ={};
         var data = 'unserName='+this.currentUser().email()+'&task_id=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://infinity-worker.herokuapp.com/timeEntry?'+data,
+          url: 'http://195.250.88.93:8081/timeEntry?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -102,7 +102,7 @@ var updateTaimeEntry ={};
       'target.fail': 'handleTargetFail',
       'getAutoTimeEntry.done':'handleGetAutoTimeEntry',
       'click .updateDate':'updateDate',
-
+      
       '*.changed': function(data) {
          var propertyName = data.propertyName;
          if(propertyName.indexOf('ticket.custom_field') != -1){
@@ -200,6 +200,7 @@ var updateTaimeEntry ={};
       this.$('.edited .hour').show();
       this.ajax('updateTimeEntry');
     },
+
     handleTimeEntry:function(data){
 
       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:data});
@@ -207,15 +208,17 @@ var updateTaimeEntry ={};
 
          this.$('.updateStart').html(this._addOptions(15));
          this.$('.updateEnd').html(this._addOptions(15));
+         var customefieldsTemplate = this.renderTemplate('customefields',{});
+         this.$('.timeentryCont .taskType').append(customefieldsTemplate);
 
          var self = this;
-
          self.$('.timeentryCont').each(function(){
             for(var i = 0; i < data.length ; i++){
               if(self.$(this).attr('id') == data[i].id){
                 if(data[i].startTime){
                   self.$('#' +self.$(this).attr('id') +' .updateStart').val(data[i].startTime);
                   self.$('#' +self.$(this).attr('id') +' .updateEnd').val(data[i].endTime);
+                  self.$('#' +self.$(this).attr('id') +' .taskType select').val(data[i].taskName.toLowerCase().replace(/\s/g, ''));
                 }
                 break;
               }
@@ -327,15 +330,12 @@ var updateTaimeEntry ={};
          this.$('.endTime').val('');
          this.$('.menualTimer').hide();
          this.$('.customeFields select').val('');
+         this.$('.customeFields select').val('');
        }
        else alert('check start and end times!');
-
         
     }
-  
    
   };
-
-
 
 }());
