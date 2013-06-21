@@ -70,10 +70,21 @@ var updateTaimeEntry ={};
 
       updateTimeEntry:function(){
 
-         var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour +'&note='+updateTaimeEntry.note + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id() +'&startTime='+updateTaimeEntry.startTime + '&endTime=' + updateTaimeEntry.endTime ;
+         var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour  + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id() +'&startTime='+updateTaimeEntry.startTime + '&endTime=' + updateTaimeEntry.endTime ;
          return {
           contentType: 'application/json',
           url: 'http://195.250.88.93:8081/updateTimeEntry?'+data,
+          type: 'GET',
+          dataType: "json"
+         
+        };
+      },
+      updateTaskType:function(){
+
+         var data = 'taskId=' + updateTaimeEntry.taskId + '&taskName='+updateTaimeEntry.taskName + '&userEmail=' + this.currentUser().email() +'&id=' + updateTaimeEntry.id  +'&ticketID=' + this.ticket().id();
+         return {
+          contentType: 'application/json',
+          url: 'http://195.250.88.93:8081/updateTaskType?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -101,8 +112,7 @@ var updateTaimeEntry ={};
       'click .target': 'appTarget',
       'target.fail': 'handleTargetFail',
       'getAutoTimeEntry.done':'handleGetAutoTimeEntry',
-      'click .updateDate':'updateDate',
-      
+
       '*.changed': function(data) {
          var propertyName = data.propertyName;
          if(propertyName.indexOf('ticket.custom_field') != -1){
@@ -135,11 +145,19 @@ var updateTaimeEntry ={};
 
       //this.$('.customeFields').append(customefieldsTemplate);
 
-      this.$('.start').html('<option>Start Time </option>'+this._addOptions(15));
-      this.$('.end').html('<option value="end">End Time </option>'+this._addOptions(15));
+      //this.$('.start').html('<option>Start Time </option>'+this._addOptions(15));
+      //this.$('.end').html('<option value="end">End Time </option>'+this._addOptions(15));
 
+      var customeSelectStartTemplate = this.renderTemplate('customeselectbox',{defval:'Start Time', id:'menstartVal' });
+      this.$('.menStart').append(customeSelectStartTemplate);
+      this.$('.menStart ul').html('<li><a tabindex="-1" href="#" data-option="0">Start Time</a></li>'+ this._addLiOptions(15));
+
+      var customeSelectEndTemplate = this.renderTemplate('customeselectbox',{defval:'End Time', id:'menendVal'});
+      this.$('.menEnd').append(customeSelectEndTemplate);
+      this.$('.menEnd ul').html('<li><a tabindex="-1" href="#" data-option="0">End Time</a></li>'+ this._addLiOptions(15));
       
       this.ajax('getAutoTimeEntry');
+      
     },
 
     appActivated : function(data){
@@ -172,42 +190,27 @@ var updateTaimeEntry ={};
               this._timeEntry(this.$('.automaticTimer textarea').val(), autoStart, autoEnd);
             }
             else {
-        this.ajax('saveAutoStartTime');
-        this.$('.automaticTimer').hide();
-      }
-              
+              this.ajax('saveAutoStartTime');
+              this.$('.automaticTimer').hide();
+            }
           }
           else{
             timeEntryType = 'menual';
-
-             this._timeEntry(this.$('.menualTimer textarea').val(),this.$('.startTime').val(), this.$('.endTime').val());
+            this._timeEntry(this.$('.menualTimer textarea').val(), this.$('#menstartVal').val(), this.$('#menendVal').val());
           }
        this.$('.automaticTimer').hide();
        this.$('.menualTimer').hide();  
     },
 
-    updateDate:function(){
-     
-      updateTaimeEntry.startTime = this.$('.edited .updateStart').val();
-      updateTaimeEntry.endTime = this.$('.edited .updateEnd').val();
-      updateTaimeEntry.hour = this._workHours( updateTaimeEntry.startTime, updateTaimeEntry.endTime);
-      updateTaimeEntry.note = this.$('.edited textarea').val();
-      updateTaimeEntry.id = this.$('.edited').attr('id');
-       
-      this.$('.edited .hour').text(updateTaimeEntry.hour);
-      this.$('.edited select').hide();
-      this.$('.edited button').hide();
-      this.$('.edited .hour').show();
-      this.ajax('updateTimeEntry');
-    },
+
 
     handleTimeEntry:function(data){
 
       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:data});
          this.$('.timeEntry').append(timeEntryTemplate);
-
          this.$('.updateStart').html(this._addOptions(15));
          this.$('.updateEnd').html(this._addOptions(15));
+
          var customefieldsTemplate = this.renderTemplate('customefields',{});
          this.$('.timeentryCont .taskType').append(customefieldsTemplate);
 
@@ -224,6 +227,13 @@ var updateTaimeEntry ={};
               }
             }
          });
+
+       self.$('.taskType select').change(function(){
+        self._updateTaskType();
+      });
+       self.$('.updateHour select').change(function(){
+        self._updateDate();
+       });
     },
 
     handleGetAutoTimeEntry:function(data){
@@ -241,6 +251,27 @@ var updateTaimeEntry ={};
     handleFail: function (data) {
       var response = JSON.parse(data.responseText);
       this.showError(response.error, response.description);
+    },
+   _updateDate:function(){
+      updateTaimeEntry.startTime = this.$('.edited .updateStart').val();
+      updateTaimeEntry.endTime = this.$('.edited .updateEnd').val();
+      updateTaimeEntry.hour = this._workHours( updateTaimeEntry.startTime, updateTaimeEntry.endTime);
+      updateTaimeEntry.id = this.$('.edited').attr('id');
+       
+      this.$('.edited .hour').text(updateTaimeEntry.hour);
+     // this.$('.updateHour').hide();
+     // this.$('.edited .hour').show();
+      this.ajax('updateTimeEntry');
+    },
+    _updateTaskType: function(){
+
+        updateTaimeEntry.taskName = this.$('.edited .taskType select').val();
+        updateTaimeEntry.taskId = this.$('.edited .taskType').attr('id');
+        updateTaimeEntry.id = this.$('.edited').attr('id');
+        this.$('.edited .taskName').text(updateTaimeEntry.taskName);
+        this.$('.taskType').hide();
+        this.$('.edited .taskName').show();
+        this.ajax('updateTaskType');
     },
 
      _addOptions:function(inc){
@@ -262,6 +293,27 @@ var updateTaimeEntry ={};
       return str;
      
     },
+
+     _addLiOptions:function(inc){
+      var str = '';
+      for(var i = 0 ; i < 2; i++){
+        for(var j = 0; j<12; j++){
+            var hour = (j > 0)? j : 12;
+            var min = 0;
+            while(min < 60){
+             var amORpm = (i === 0)? 'am':'pm';
+              var mStr = (min <10) ? '0'+min : min;
+              var hStr = (hour <10) ? '0'+ hour : hour;
+              var time = hStr + ':' + mStr + amORpm;
+              str += ' <li><a tabindex="-1" href="#" data-option="'+ time +'">'+ time +'</a></li>';
+              min += inc;
+           }
+        }
+      }
+      return str;
+     
+    },
+
 
     _workHours: function(start, end){
         var startLock = start.substr(start.length-2);
@@ -326,8 +378,16 @@ var updateTaimeEntry ={};
          this.$('textarea').val('');
          this.$('#menualstart').val('start');
          this.$('#menualend').val('end');
-         this.$('.startTime').val('');
-         this.$('.endTime').val('');
+        var customeSelectStartTemplate = this.renderTemplate('customeselectbox',{defval:'Start Time', id:'menstartVal' });
+        this.$('.menStart').html('');
+        this.$('.menStart').html(customeSelectStartTemplate);
+        this.$('.menStart ul').html('<li><a tabindex="-1" href="#" data-option="0">Start Time</a></li>'+ this._addLiOptions(15));
+
+        var customeSelectEndTemplate = this.renderTemplate('customeselectbox',{defval:'End Time', id:'menendVal'});
+        this.$('.menEnd').html('');
+        this.$('.menEnd').html(customeSelectEndTemplate);
+        this.$('.menEnd ul').html('<li><a tabindex="-1" href="#" data-option="0">End Time</a></li>'+ this._addLiOptions(15));
+         
          this.$('.menualTimer').hide();
          this.$('.customeFields select').val('');
          this.$('.customeFields select').val('');

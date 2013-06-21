@@ -1,0 +1,14 @@
+ <input type="hidden" name="selectbox3" id="{{id}}" value="">
+  <a class="bfh-selectbox-toggle input-medium" role="button" data-toggle="bfh-selectbox" href="#">
+    <span class="bfh-selectbox-option input-medium" data-option="0">{{defval}}</span>
+    <b class="caret"></b>
+  </a>
+  <div class="bfh-selectbox-options">
+    <input type="text" class="bfh-selectbox-filter input-medium">
+    <div role="listbox">
+    <ul role="option">
+      <li><a tabindex="-1" href="#" data-option="0">{{defval}}</a></li>
+    </ul>
+  </div>
+  </div>
+  
