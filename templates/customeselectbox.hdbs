@@ -1,6 +1,6 @@
- <input type="hidden" name="selectbox3" id="{{id}}" value="">
+ <input type="hidden" name="selectbox3" id="{{id}}" class= 'option-val' value="{{defval}}">
   <a class="bfh-selectbox-toggle input-medium" role="button" data-toggle="bfh-selectbox" href="#">
-    <span class="bfh-selectbox-option input-medium" data-option="0">{{defval}}</span>
+    <span class="bfh-selectbox-option input-medium" data-option="{{defval}}">{{defval}}</span>
     <b class="caret"></b>
   </a>
   <div class="bfh-selectbox-options">

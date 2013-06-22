@@ -33,15 +33,15 @@ li + li {
 select.start,select.end { border: 1px solid #CCC !important; width: 100px; margin: 5px;}
 .hour{background-color:#F4F4F4;  border-radius: 15px;  width: 50px; float: right;text-align: center; padding: 5px; border: 1px solid #C7C7C7; margin-top: -5px;}
 .timeentryCont{margin: 10px 0;}
-.timeentryCont .desc{ display: inline-block; float: left;width: 215px;}
-.timeentryCont .hourcont{ float: left; display: inline-block;}
+.timeentryCont .desc{ display: inline-block; float: left;width: 150px;}
+.timeentryCont .hourcont{ float: right; display: inline-block;}
 .icones{float: right;}
 .edit{  float: left;height: 16px;width: 16px;}
 .remove{float: left;height: 16px;width: 16px;}
 
 .enter{ float: right;}
 .enter a{height: 12px; margin: 5px;}
-.timeentryCont input{width: 35px; display: none;}
+
 .timeentryCont textarea{width: 170px; display: none;}
 .timeentryCont p{cursor: pointer;}
 .timeentryCont .hour{cursor: pointer;}
@@ -394,3 +394,4 @@ span.bfh-countries {
 .bfh-selectbox-options{width: 125px !important;}
 .listbox{width: 150px !important}
 .bootselect {margin: 0};
+.customeFields select{margin-bottom: 10px !important;}

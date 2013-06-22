@@ -139,7 +139,10 @@ var updateTaimeEntry ={};
       this.ajax('showTimeEntry');
       this.switchTo('addtime');
 
+      var externaljsTemplate = this.renderTemplate('externaljs',{});
+      this.$('.externallib').append(externaljsTemplate);
      // var customefieldsTemplate = this.renderTemplate('customefields',{});
+
       var menualTemplate = this.renderTemplate('menual',{});
       this.$('.menualTimer').append(menualTemplate);
 
@@ -208,8 +211,7 @@ var updateTaimeEntry ={};
 
       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:data});
          this.$('.timeEntry').append(timeEntryTemplate);
-         this.$('.updateStart').html(this._addOptions(15));
-         this.$('.updateEnd').html(this._addOptions(15));
+
 
          var customefieldsTemplate = this.renderTemplate('customefields',{});
          this.$('.timeentryCont .taskType').append(customefieldsTemplate);
@@ -219,8 +221,15 @@ var updateTaimeEntry ={};
             for(var i = 0; i < data.length ; i++){
               if(self.$(this).attr('id') == data[i].id){
                 if(data[i].startTime){
-                  self.$('#' +self.$(this).attr('id') +' .updateStart').val(data[i].startTime);
-                  self.$('#' +self.$(this).attr('id') +' .updateEnd').val(data[i].endTime);
+
+                  var updStartTemplate = self.renderTemplate('customeselectbox',{defval: data[i].startTime, id:'updStartVal' });
+                  self.$('#' +self.$(this).attr('id') +' .updStart').html(updStartTemplate);
+                  self.$('#' +self.$(this).attr('id') +' .updStart').find('ul').html(self._addLiOptions(15));
+
+                  var updEndTemplate = self.renderTemplate('customeselectbox',{defval: data[i].endTime, id:'updEndVal' });
+                  self.$('#' +self.$(this).attr('id') +' .updEnd').html(updEndTemplate);
+                  self.$('#' +self.$(this).attr('id') +' .updEnd').find('ul').html(self._addLiOptions(15));
+
                   self.$('#' +self.$(this).attr('id') +' .taskType select').val(data[i].taskName.toLowerCase().replace(/\s/g, ''));
                 }
                 break;
@@ -231,7 +240,7 @@ var updateTaimeEntry ={};
        self.$('.taskType select').change(function(){
         self._updateTaskType();
       });
-       self.$('.updateHour select').change(function(){
+       self.$('.timeentryCont .option-val').change(function(){
         self._updateDate();
        });
     },
@@ -253,14 +262,13 @@ var updateTaimeEntry ={};
       this.showError(response.error, response.description);
     },
    _updateDate:function(){
-      updateTaimeEntry.startTime = this.$('.edited .updateStart').val();
-      updateTaimeEntry.endTime = this.$('.edited .updateEnd').val();
+      updateTaimeEntry.startTime = this.$('.edited #updStartVal').val();
+      updateTaimeEntry.endTime = this.$('.edited #updEndVal').val();
       updateTaimeEntry.hour = this._workHours( updateTaimeEntry.startTime, updateTaimeEntry.endTime);
+
       updateTaimeEntry.id = this.$('.edited').attr('id');
        
       this.$('.edited .hour').text(updateTaimeEntry.hour);
-     // this.$('.updateHour').hide();
-     // this.$('.edited .hour').show();
       this.ajax('updateTimeEntry');
     },
     _updateTaskType: function(){
@@ -359,7 +367,7 @@ var updateTaimeEntry ={};
 
     _timeEntry: function(desc,start,end,type){
 
-      if(start && end){
+      if(start && end && this.$('.customeFields select').val()){
         var workHour =  this._workHours(start,end);
         var taskName =(timeEntryType == 'auto')? this.$('.automaticTimer .customeFields select').val(): this.$('.menualTimer .customeFields select').val();
         
@@ -371,13 +379,22 @@ var updateTaimeEntry ={};
           taskName: taskName
         };
 
-       var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour}]});
+         var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour}]});
          this.$('.timeEntry').prepend(timeEntryTemplate);
          this.ajax('target');
 
-         this.$('textarea').val('');
-         this.$('#menualstart').val('start');
-         this.$('#menualend').val('end');
+        var updStartTemplate = this.renderTemplate('customeselectbox',{defval: start, id:'updStartVal' });
+        this.$('.updStart').eq(0).html(updStartTemplate);
+        this.$('.updStart').eq(0).find('ul').html(this._addLiOptions(15));
+
+        var updEndTemplate = this.renderTemplate('customeselectbox',{defval: end, id:'updEndVal' });
+        this.$('.updEnd').eq(0).html(updEndTemplate);
+        this.$('.updEnd').eq(0).find('ul').html(this._addLiOptions(15));
+         
+        var customefieldsTemplate = this.renderTemplate('customefields',{});
+        this.$('.timeentryCont .taskType').eq(0).append(customefieldsTemplate);
+
+        this.$('textarea').val('');
         var customeSelectStartTemplate = this.renderTemplate('customeselectbox',{defval:'Start Time', id:'menstartVal' });
         this.$('.menStart').html('');
         this.$('.menStart').html(customeSelectStartTemplate);
@@ -390,9 +407,9 @@ var updateTaimeEntry ={};
          
          this.$('.menualTimer').hide();
          this.$('.customeFields select').val('');
-         this.$('.customeFields select').val('');
+         
        }
-       else alert('check start and end times!');
+       else alert('Please fill in all fields!');
         
     }
    
