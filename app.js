@@ -381,7 +381,7 @@ var updateTaimeEntry ={};
           date: date
         };
 
-         var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour}]});
+         var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour, date:date}]});
          this.$('.timeEntry').prepend(timeEntryTemplate);
          this.ajax('target');
 
