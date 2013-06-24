@@ -46,7 +46,7 @@ var updateTaimeEntry ={};
       },
       
       saveAutoStartTime:function(){
-        var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&taskID=' + this.ticket().id() +'&taskName=' +this.$('.automaticTimer select').val();
+        var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&taskID=' + this.ticket().id() +'&taskName=' +this.$('.automaticTimer select').val() +'&date='+this.$('.automaticTimer .dpvalue').val();
          return {
           contentType: 'application/json',
           url: 'http://195.250.88.93:8081/saveAutoTimeEntry?'+data,
@@ -241,7 +241,13 @@ var updateTaimeEntry ={};
     },
 
     handleGetAutoTimeEntry:function(data){
-      var automaticTemplate = this.renderTemplate('automatic',{interval:15, startTime: data.startTime, notes: data.notes});
+      var nowTemp = new Date();
+      var curdate =nowTemp.getFullYear() + '-' + (nowTemp.getMonth()+1) + '-' + nowTemp.getDate();
+     
+       if(data.date) 
+        curdate = data.date;
+
+      var automaticTemplate = this.renderTemplate('automatic',{interval:15, startTime: data.startTime, notes: data.notes, date:curdate});
       this.$('.automaticTimer').append(automaticTemplate);
       var customefieldsTemplate = this.renderTemplate('customefields',{});
       this.$('.customeFields').append(customefieldsTemplate);
@@ -365,14 +371,14 @@ var updateTaimeEntry ={};
       if(start && end && this.$('.customeFields select').val()){
         var workHour =  this._workHours(start,end);
         var taskName =(timeEntryType == 'auto')? this.$('.automaticTimer .customeFields select').val(): this.$('.menualTimer .customeFields select').val();
-        
+        var date = (timeEntryType == 'auto')? this.$('.automaticTimer .dpvalue').val() : this.$('.menualTimer .dpvalue').val();
         workData = {
           workHours: workHour,
           workDescription :desc,
           startTime: start,
           endTime: end,
           taskName: taskName,
-          date:this.$('.dpvalue').val()
+          date: date
         };
 
          var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour}]});

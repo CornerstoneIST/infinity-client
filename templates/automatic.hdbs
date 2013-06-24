@@ -1,6 +1,13 @@
 <div class='customeFields'></div>
 <div class='clear'></div>
 
+<div class='clear'/>
+<div class="input-append date" id="dpaout" data-date="{{date}}" data-date-format="yyyy-mm-dd">
+  <input class="span2 dpvalue" size="16" type="text" value="{{date}}">
+  <span class="add-on"><i class="icon-th"></i></span>
+</div>
+
+<div class='clear'/>
 <input type='hidden' value={{interval}} class='interval'/>
 <div class ='lable'><p>Start Timer</p></div>
 <div class ='enter'>
@@ -52,6 +59,33 @@
 			$('.menual').hide();
 			$('.disabledMenual').show();
 		}
+		 $('#dpaout').datepicker();
+   	 
+		$('.datepicker .day').add('.datepicker th').hover(
+		  function () {
+		    $(this).css({"background":"#eeeeee"});
+		  },
+		  function () {
+		    $(this).css({"background":"#FFF"});
+		     $('.datepicker .active').css({"background":"#78A300", "color":"#FFF", "border-radius" : "5px"});
+		  }
+		);
+		
+		$('.datepicker td span').hover(
+		  function () {
+		    $(this).css({"background":"#eeeeee"});
+		  },
+		  function () {
+		    $(this).css({"background":"#FFF"});
+		     $('.datepicker .active').css({"background":"#78A300", "color":"#FFF", "border-radius" : "5px"});
+		  }
+		);
+		
+		
+		 $('.datepicker td').css({"cursor" : "pointer"});
+   		 $('.datepicker .old').add('.datepicker .new').css( {"color" : "#999999"});
+   		 $('.datepicker .active').css({"background":"#78A300", "color":"#FFF", "border-radius" : "5px"});
+   		 $('.datepicker td span').css({  "display": "block", "width": "35px","height": "30px", "line-height": "29px", "float": "left", "margin": "2px","cursor": "pointer","border-radius": "4px", "text-align" :"center"})
 	})
 
 		getCurTime = function( interval){
