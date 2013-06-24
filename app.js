@@ -34,13 +34,12 @@ var updateTaimeEntry ={};
         }
         var timeEntryData = '';
         if(timeEntryType)
-            timeEntryData = '&workDescription='+workData.workDescription + '&startTime='+workData.startTime+'&endTime=' + workData.endTime+'&workHours='+workData.workHours + '&taskName=' +workData.taskName;
+            timeEntryData = '&workDescription='+workData.workDescription + '&startTime='+workData.startTime+'&endTime=' + workData.endTime+'&workHours='+workData.workHours + '&taskName=' +workData.taskName + '&date=' +workData.date;
 
         var tiketData = 'id='+this.ticket().id() +'&userEmail=' + this.currentUser().email() +'&assignee_id=' + assigneeUserId +'&custom_fields=' + customFieldsValue +'&subject=' + this.ticket().subject() +'&description=' + this.ticket().description() + '&timeEntryType='+timeEntryType + timeEntryData;
     
          return {
           contentType: 'application/json',
-         //url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
           url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
           type: 'GET'
         };
@@ -141,15 +140,11 @@ var updateTaimeEntry ={};
 
       var externaljsTemplate = this.renderTemplate('externaljs',{});
       this.$('.externallib').append(externaljsTemplate);
-     // var customefieldsTemplate = this.renderTemplate('customefields',{});
-
-      var menualTemplate = this.renderTemplate('menual',{});
+  
+      var nowTemp = new Date();
+      var curdate =nowTemp.getFullYear() + '-' + (nowTemp.getMonth()+1) + '-' + nowTemp.getDate();
+      var menualTemplate = this.renderTemplate('menual',{date: curdate});
       this.$('.menualTimer').append(menualTemplate);
-
-      //this.$('.customeFields').append(customefieldsTemplate);
-
-      //this.$('.start').html('<option>Start Time </option>'+this._addOptions(15));
-      //this.$('.end').html('<option value="end">End Time </option>'+this._addOptions(15));
 
       var customeSelectStartTemplate = this.renderTemplate('customeselectbox',{defval:'Start Time', id:'menstartVal' });
       this.$('.menStart').append(customeSelectStartTemplate);
@@ -376,7 +371,8 @@ var updateTaimeEntry ={};
           workDescription :desc,
           startTime: start,
           endTime: end,
-          taskName: taskName
+          taskName: taskName,
+          date:this.$('.dpvalue').val()
         };
 
          var timeEntryTemplate = this.renderTemplate('timeentry',{entryData:[{taskName:taskName, hour:workHour}]});
