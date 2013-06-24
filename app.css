@@ -12,6 +12,7 @@ h3 {
   width: 25px;
 }
 
+
 li + li {
   margin-top: 0.4em;
 }
@@ -75,7 +76,7 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
 }
 
 .bfh-selectbox-toggle {
-  *margin-bottom: -3px;
+  margin-bottom: -3px;
 }
 
 .bfh-selectbox-toggle:active,
@@ -106,8 +107,7 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
   background-color: #ffffff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  *border-right-width: 2px;
-  *border-bottom-width: 2px;
+
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
@@ -157,7 +157,7 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
   background-image: -o-linear-gradient(top, #0088cc, #0077b3);
   background-image: linear-gradient(to bottom, #0088cc, #0077b3);
   background-repeat: repeat-x;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+  
 }
 
 .bfh-googlefonts .bfh-selectbox-options li > a:focus {
@@ -394,4 +394,4 @@ span.bfh-countries {
 .bfh-selectbox-options{width: 125px !important;}
 .listbox{width: 150px !important}
 .bootselect {margin: 0};
-.customeFields select{margin-bottom: 10px !important;}
+.customeFields select{margin-bottom: 10px !important; }
