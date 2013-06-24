@@ -395,6 +395,8 @@ var updateTaimeEntry ={};
          
         var customefieldsTemplate = this.renderTemplate('customefields',{});
         this.$('.timeentryCont .taskType').eq(0).append(customefieldsTemplate);
+        this.$('.timeentryCont .taskType').eq(0).find('select').val(taskName);
+
 
         this.$('textarea').val('');
         var customeSelectStartTemplate = this.renderTemplate('customeselectbox',{defval:'Start Time', id:'menstartVal' });
