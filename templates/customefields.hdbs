@@ -5,7 +5,7 @@
 	{{#if this.options.length}}
 		<div>
 			<div class="bfh-selectbox taskfields">
-			  <input type="hidden" value="-">
+			  <input type="hidden" class='val' value="-">
 			  <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
 			    <span class="bfh-selectbox-option input-large" data-option="1">-</span>
 			    <b class="caret"></b>
@@ -29,6 +29,7 @@
 		</div>
 	{{/if}}
 </div>
+<input type='hidden' class='contType' />
 <div class='clear'/>
 
 {{/each}}
@@ -37,8 +38,15 @@
 $(function(){
 	$('.custfields li').click(function(){
 		if($(this).hasClass('custom')){
-			$('.hidden').show();
+				$('.hourly').val('');
+			$(this).parent('.hidden').show();
+			$('.contType').val('custom');
+		}else 
+		if($(this).hasClass('combine')){
+			$(this).parent('.hidden').hide();
+			$('.contType').val('combine');
 		}
+		
 			
 	})
 })

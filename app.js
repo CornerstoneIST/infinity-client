@@ -125,27 +125,7 @@ var updateTaimeEntry ={};
       'target.fail': 'handleTargetFail',
       'getAutoTimeEntry.done':'handleGetAutoTimeEntry',
       'getCustomeFields.done': 'handleGetCustomeFields'
-/*
-      '*.changed': function(data) {
-         var propertyName = data.propertyName;
-         if(propertyName.indexOf('ticket.custom_field') != -1){
-            var insert = true;
-            for(var i=0; i<customFields.length; i++){
-              if(customFields[i].key == data.propertyName){
-                customFields[i].value = data.newValue;
-                insert = false;
-                break;
-              }
-            }
-            if(insert){
-              customFields.push({key:data.propertyName, value:data.newValue});
-              }
-         }
-         else
-           if(propertyName.indexOf('ticket.assignee.user.id')!= -1){
-              assigneeUserId = data.newValue;
-           }
-      }*/
+
 
     },
     init: function(data) {
@@ -271,10 +251,7 @@ var updateTaimeEntry ={};
     },
 
     handleGetCustomeFields:function(data){
-
-     // customFields.push(data);
-      //console.log(customFields);
-
+     customFields = data;
      var customefieldsTemplate = this.renderTemplate('customefields',{customFields:data});
       this.$('.customeFieldsnew').append(customefieldsTemplate);
     
@@ -393,7 +370,7 @@ var updateTaimeEntry ={};
     },
 
     _timeEntry: function(desc,start,end,type){
-
+//this._taskType(this.$('.menualTimer'));
       if(start && end && this.$('.customeFields select').val()){
         var workHour =  this._workHours(start,end);
         var taskName =(timeEntryType == 'auto')? this.$('.automaticTimer .customeFields select').val(): this.$('.menualTimer .customeFields select').val();
@@ -441,7 +418,53 @@ var updateTaimeEntry ={};
        }
        else alert('Please fill in all fields!');
         
-    }
+    }/*,
+   _taskType:function(parent){
+      alert('aaaa');
+      var self = this ;
+      var toggleBreack = false;
+      var task={};
+      self.contractType = self.$(parent).find('.contractType .val').val();
+      var contType =  self.$(parent).find('.contType');
+   
+        self.$(parent).find('.val').each(function(){
+          var val = self.$(this).val();
+          console.log(val);
+          console.log('***********');
+
+          if(!toggleBreack){
+             for(var i = 0; i < customFields.length; i++){
+              if(customFields[i].field.tagName != 'contractType' &&  customFields[i].field.tagName != 'rateType')
+                for(var j =0 ; j < customFields[i].options.length; j++ ){
+                  if(customFields[i].options[j].type == 'reset'){
+                    task.contractRate = 0;
+                    task.taskName = customFields[i].options[j].name;
+                    toggleBreack = true;
+                    break;
+                  }
+                  else{
+                    if(customFields[i].options[j].tagName == val)
+                      task.contractRate = task.contractRate*1 + customFields[i].options[j].rate*1;
+                    if(task.taskName)
+                      task.taskName =(task.taskName)? task.taskName + ' - 'customFields[i].options[j].name: customFields[i].options[j].name;
+                  }
+                }
+
+                if(toggleBreack)
+                  break;
+             }
+          }
+
+        });
+
+       if(contType == 'custom'){
+        task.contractRate = self.$(parent).find('.rateType input').val();
+       }
+
+      console.log(task);
+
+
+    }*/
    
   };
 
