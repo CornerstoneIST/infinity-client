@@ -57,8 +57,11 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
 .taskType{display: none;}
 .taskName {text-transform:capitalize;}
 
-
-
+.taskfields, .hourly {margin-top: 5px !important; margin-bottom: 10px !important;}
+.taskfields .bfh-selectbox-filter{ width: 85%;}
+.hourly{width: 68%;}
+.custfields.show{display: block};
+.custfields.hidden{display: none; visibility:visible !important;};
 /*!
  * Bootstrap Form Helpers
  *
@@ -388,10 +391,13 @@ span.bfh-countries {
 .open > .bfh-timepicker-popover {
   display: block;
 }
-.bfh-selectbox-toggle{max-height: 20px !important;}
-.bfh-selectbox-toggle b {margin-top:-13px !important; }
-.bfh-selectbox-options ul{ width: 150px !important;}
-.bfh-selectbox-options{width: 125px !important;}
-.listbox{width: 150px !important}
+
+
+.bootselect .bfh-selectbox-toggle{max-height: 20px !important;}
+.bootselect .bfh-selectbox-toggle b {margin-top:-13px !important; }
+.bootselect .bfh-selectbox-options ul{ width: 150px !important;}
+.bootselect .bfh-selectbox-options{width: 125px !important;}
+.bootselect .listbox{width: 150px !important}
 .bootselect {margin: 0};
-.customeFields select{margin-bottom: 10px !important; }
+
+

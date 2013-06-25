@@ -4,6 +4,7 @@ var assigneeUserId =null;
 var workData = {};
 var timeEntryType='';
 var updateTaimeEntry ={};
+
   return {
 
     defaultState: 'loading',
@@ -28,19 +29,20 @@ var updateTaimeEntry ={};
       },
 
       target: function(data){
-        var customFieldsValue = '';
+       /* var customFieldsValue = '';
         for(var i=0; i < customFields.length; i++){
           customFieldsValue += ' '+customFields[i].key+' '+ customFields[i].value ;
-        }
+        }*/
         var timeEntryData = '';
         if(timeEntryType)
             timeEntryData = '&workDescription='+workData.workDescription + '&startTime='+workData.startTime+'&endTime=' + workData.endTime+'&workHours='+workData.workHours + '&taskName=' +workData.taskName + '&date=' +workData.date;
 
-        var tiketData = 'id='+this.ticket().id() +'&userEmail=' + this.currentUser().email() +'&assignee_id=' + assigneeUserId +'&custom_fields=' + customFieldsValue +'&subject=' + this.ticket().subject() +'&description=' + this.ticket().description() + '&timeEntryType='+timeEntryType + timeEntryData;
+        var tiketData = 'id='+this.ticket().id() +'&userEmail=' + this.currentUser().email() +'&assignee_id=' + assigneeUserId +/*'&custom_fields=' + customFieldsValue +*/'&subject=' + this.ticket().subject() +'&description=' + this.ticket().description() + '&timeEntryType='+timeEntryType + timeEntryData;
     
          return {
           contentType: 'application/json',
           url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
+          //url: 'http://cornerstoneist/infinity-worker/ticketchanged?'+tiketData,
           type: 'GET'
         };
       },
@@ -83,7 +85,7 @@ var updateTaimeEntry ={};
          var data = 'taskId=' + updateTaimeEntry.taskId + '&taskName='+updateTaimeEntry.taskName + '&userEmail=' + this.currentUser().email() +'&id=' + updateTaimeEntry.id  +'&ticketID=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/updateTaskType?'+data,
+          url: 'http://cornerstoneist/infinity-worker/updateTaskType?'+data,
           type: 'GET',
           dataType: "json"
          
@@ -98,7 +100,18 @@ var updateTaimeEntry ={};
           dataType: "json"
          
         };
+      },
+      getCustomeFields:function(){
+        var data = 'unserName='+this.currentUser().email();
+         return {
+          contentType: 'application/json',
+          url: 'http://195.250.88.93:8081/getcustomefields?'+data,
+          type: 'GET',
+          dataType: "json"
+         
+        };
       }
+
 
     },
 
@@ -111,7 +124,8 @@ var updateTaimeEntry ={};
       'click .target': 'appTarget',
       'target.fail': 'handleTargetFail',
       'getAutoTimeEntry.done':'handleGetAutoTimeEntry',
-
+      'getCustomeFields.done': 'handleGetCustomeFields'
+/*
       '*.changed': function(data) {
          var propertyName = data.propertyName;
          if(propertyName.indexOf('ticket.custom_field') != -1){
@@ -131,12 +145,14 @@ var updateTaimeEntry ={};
            if(propertyName.indexOf('ticket.assignee.user.id')!= -1){
               assigneeUserId = data.newValue;
            }
-      }
+      }*/
 
     },
     init: function(data) {
+
       this.ajax('showTimeEntry');
       this.switchTo('addtime');
+      this.ajax('getCustomeFields');
 
       var externaljsTemplate = this.renderTemplate('externaljs',{});
       this.$('.externallib').append(externaljsTemplate);
@@ -253,7 +269,17 @@ var updateTaimeEntry ={};
       this.$('.customeFields').append(customefieldsTemplate);
       this.$('.automaticTimer select').val(data.taskName);
     },
+
+    handleGetCustomeFields:function(data){
+
+     // customFields.push(data);
+      //console.log(customFields);
+
+     var customefieldsTemplate = this.renderTemplate('customefields',{customFields:data});
+      this.$('.customeFieldsnew').append(customefieldsTemplate);
     
+    },
+
     handleTargetFail :function(data){
       alert('fail');
     },

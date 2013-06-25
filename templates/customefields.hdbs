@@ -1,10 +1,45 @@
-	<div class = 'lable'><p>Work Type</p></div>
-	<div class = 'pull-left'>
-		<select>
-			<option > -</option>
-			<option value='onsite'> Onsite</option>
-			<option value='remote'> Remote</option>
-			<option value='bench'> Bench</option>
-		</select>
-	</div>
+{{#each customFields}}
+<div class='custfields  {{this.field.tagName}} {{this.field.display}} '>
+	<div><p>{{this.field.name}}</p></div>
+	<div class='clear'/>
+	{{#if this.options.length}}
+		<div>
+			<div class="bfh-selectbox taskfields">
+			  <input type="hidden" value="-">
+			  <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
+			    <span class="bfh-selectbox-option input-large" data-option="1">-</span>
+			    <b class="caret"></b>
+			  </a>
+			  <div class="bfh-selectbox-options">
+			    <input type="text" class="bfh-selectbox-filter input-large">
+			    <div role="listbox">
+				    <ul role="option">
+	  					<li><a tabindex="-1" href="#" data-option="1">-</a></li>
+						{{#each this.options}}
+						<li class="{{this.type}}"><a tabindex="-1" href="#" data-option="{{this.tagName}}">{{this.name}}</a></li>
+						{{/each }}
+					</ul>
+			 	 </div>
+			  </div>
+			</div>
+		</div>
+	{{else}}
+		<div>
+			<input type='text' class="input-xxlarge hourly"/>
+		</div>
+	{{/if}}
 </div>
+<div class='clear'/>
+
+{{/each}}
+
+<script>
+$(function(){
+	$('.custfields li').click(function(){
+		if($(this).hasClass('custom')){
+			$('.hidden').show();
+		}
+			
+	})
+})
+</script>
