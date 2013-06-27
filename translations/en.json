@@ -11,10 +11,10 @@
       "title"     : "An error occurred",
       "message"   : "Please try the previous action again."
     },
-    "loading"     : "Loading Wuzy Application...",
+    "loading"     : "Initialising app...",
     "no_results"  : "No results found."
   },
-
+  
   "ticket": {
     "id"      : "ID",
     "subject" : "SUBJECT"

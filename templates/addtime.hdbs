@@ -10,9 +10,17 @@
 <input type ='hidden' class='startTime' />
 <input type ='hidden' class='endTime' />
 
-<div class='menualTimer'></div>
+<div class='menualTimer'>
+	<div class='customeFieldsnew'></div>
+	<div class='clear'></div>
+</div>
 
 <div class='automatic'>
    <div><p>Automatic Time Entry</p></div>
 </div>
-<div class='automaticTimer'></div>
+<div class='automaticTimer'>
+	<div class='customeFieldsnew'></div>
+	<div class='clear'></div>
+</div>
+
+<div class='externallib'/>

@@ -6,6 +6,7 @@
 		<div class='taskType' id='{{this.taskId}}'></div>
 		<div class='clear'></div>
 	</div>
+ <div class='clear'></div>
 	<div class='dateEntry pull-left'>
     <p>{{this.date}}</p>
   </div>

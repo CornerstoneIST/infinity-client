@@ -1,8 +1,4 @@
-<div class='customeFieldsnew'></div>
-
-<div class='clear'></div>
 <div class ='timerCont'>
-
 <div class='clear'/>
 
 <div class="input-append date" id="dp" data-date="{{date}}" data-date-format="yyyy-mm-dd">

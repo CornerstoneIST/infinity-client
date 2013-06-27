@@ -34,7 +34,7 @@ li + li {
 select.start,select.end { border: 1px solid #CCC !important; width: 100px; margin: 5px;}
 .hour{background-color:#F4F4F4;  border-radius: 15px;  width: 50px; float: right;text-align: center; padding: 5px; border: 1px solid #C7C7C7; margin-top: -5px;}
 .timeentryCont{margin: 10px 0;}
-.timeentryCont .desc{ display: inline-block; float: left;width: 80px;}
+.timeentryCont .desc{ display: inline-block; margin-bottom: 10px;}
 .timeentryCont .hourcont{ float: right; display: inline-block;}
 .icones{float: right;}
 .edit{  float: left;height: 16px;width: 16px;}
@@ -46,6 +46,7 @@ select.start,select.end { border: 1px solid #CCC !important; width: 100px; margi
 .timeentryCont textarea{width: 170px; display: none;}
 .timeentryCont p{cursor: pointer;}
 .timeentryCont .hour{cursor: pointer;}
+
 .updateHour{display:none;}
 /*.updateStart, .updateEnd,.updateDate{display: none;}*/
 .updateDate {  margin: 10px 0;}

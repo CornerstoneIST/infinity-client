@@ -39,14 +39,14 @@ $(function(){
 	$('.custfields li').click(function(){
 		if($(this).hasClass('custom')){
 				$('.hourly').val('');
-			$(this).parent('.hidden').show();
+			$('.hidden').show();
 			$('.contType').val('custom');
 		}else 
 		if($(this).hasClass('combine')){
-			$(this).parent('.hidden').hide();
+			$('.hidden').hide();
 			$('.contType').val('combine');
 		}
-		
+
 			
 	})
 })

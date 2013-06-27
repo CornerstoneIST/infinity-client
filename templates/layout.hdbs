@@ -1,11 +1,12 @@
 <header class='head'>
   <span class="logo"/>
-  <h3>Wuzy</h3>
+  <h3>Freshbook</h3>
 </header>
-<div class='externallib'/>
+<div class='externaldp'/>
 <div class = 'timeEntry'/>
 
 
 <section data-main />
+
  <button type="submit" class="btn target">Submit Entry</button>
 
