@@ -9,50 +9,51 @@ var updateTaimeEntry ={};
   return {
 
     defaultState: 'loading',
+    // Here we define AJAX calls
     requests: {
-     
 
-      sendUsersData: function() {
+      // An event will trigger when this request happens
+      sendUsersData: function() { //first function connects zendesk and freshbooks
 
-        var  subdomain =  this.currentAccount().subdomain();
-        var  userEmail = this.currentUser().email();
-        var  zendeskToken = this.setting('zendeskToken');
-        var  fbHost = this.setting('freshbookHost');
-        var  fbToken = this.setting('freshbookToken');
+        var  subdomain =  this.currentAccount().subdomain(); //Gets Zendesk Subdomain
+        var  userEmail = this.currentUser().email(); //Current Zendesk Agents Email Address
+        var  zendeskToken = this.setting('zendeskToken'); //Zendesk Login token entered during application setup
+        var  fbHost = this.setting('freshbookHost'); //Freshbooks host url (subdomain.freshbooks.com) entered during application setup
+        var  fbToken = this.setting('freshbookToken'); //Freshbooks token associated with account entered during application setup
         var  data = 'subdomain=' + subdomain + '&userEmail=' + userEmail + '&zendeskToken=' + zendeskToken + '&fbHost=' + fbHost + '&fbToken=' + fbToken;
-      
+
         return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/createNewUser?'+data,
+          url: 'http://api.wuzy.com/createNewUser?'+data,
           type: 'GET'
-         
+
         };
       },
 
-      target: function(data){
-       
+      target: function(data){ //Creates Target? Maybe defunct
+
         var timeEntryData = '';
         if(timeEntryType)
             timeEntryData = '&workDescription='+workData.workDescription + '&startTime='+workData.startTime+'&endTime=' + workData.endTime+'&workHours='+workData.workHours + '&taskName=' + workData.taskName + '&contractRate=' + workData.contractRate + '&contractType=' + workData.contractType + '&date=' + workData.date;
 
         var tiketData = 'id='+this.ticket().id() +'&userEmail=' + this.currentUser().email() +'&assignee_id=' + assigneeUserId +/*'&custom_fields=' + customFieldsValue +*/'&subject=' + this.ticket().subject() +'&description=' + this.ticket().description() + '&timeEntryType='+timeEntryType + timeEntryData;
-    
+
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/ticketchanged?'+tiketData,
+          url: 'http://api.wuzy.com/ticketchanged?'+tiketData,
           //url: 'http://cornerstoneist/infinity-worker/ticketchanged?'+tiketData,
           type: 'GET'
         };
       },
-      
+
       saveAutoStartTime:function(fieldsVal){
         var data = 'notes=' +  this.$('.automaticTimer textarea').val() +'&startTime=' + this.$('.autostart').html() + '&userEmail=' + this.currentUser().email()+'&ticketID=' + this.ticket().id() +'&fieldsVal=' + fieldsVal ;
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/saveAutoTimeEntry?'+data,
+          url: 'http://api.wuzy.com/saveAutoTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
-         
+
         };
       },
 
@@ -60,10 +61,10 @@ var updateTaimeEntry ={};
          var data = 'ticketID=' + this.ticket().id()+'&userEmail=' + this.currentUser().email();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/getAutoTimeEntry?'+data,
+          url: 'http://api.wuzy.com/getAutoTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
-         
+
         };
       },
 
@@ -72,10 +73,10 @@ var updateTaimeEntry ={};
          var data = 'id=' + updateTaimeEntry.id +'&hour=' + updateTaimeEntry.hour  + '&userEmail=' + this.currentUser().email()+'&taskID='+ this.ticket().id() +'&startTime='+updateTaimeEntry.startTime + '&endTime=' + updateTaimeEntry.endTime ;
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/updateTimeEntry?'+data,
+          url: 'http://api.wuzy.com/updateTimeEntry?'+data,
           type: 'GET',
           dataType: "json"
-         
+
         };
       },
       updateTaskType:function(){
@@ -83,30 +84,30 @@ var updateTaimeEntry ={};
          var data = 'taskId=' + updateTaimeEntry.taskId + '&taskName='+updateTaimeEntry.taskName + '&userEmail=' + this.currentUser().email() +'&id=' + updateTaimeEntry.id  +'&ticketID=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://cornerstoneist/infinity-worker/updateTaskType?'+data,
+          url: 'http://api.wuzy.com/updateTaskType?'+data,
           type: 'GET',
           dataType: "json"
-         
+
         };
       },
       showTimeEntry:function(){
         var data = 'unserName='+this.currentUser().email()+'&task_id=' + this.ticket().id();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/timeEntry?'+data,
+          url: 'http://api.wuzy.com/timeEntry?'+data,
           type: 'GET',
           dataType: "json"
-         
+
         };
       },
       getCustomeFields:function(){
         var data = 'unserName='+this.currentUser().email();
          return {
           contentType: 'application/json',
-          url: 'http://195.250.88.93:8081/getcustomefields?'+data,
+          url: 'http://api.wuzy.com/getcustomefields?'+data,
           type: 'GET',
           dataType: "json"
-         
+
         };
       }
 
@@ -134,10 +135,10 @@ var updateTaimeEntry ={};
 
       var externalDPTemplate = this.renderTemplate('datepicker',{});
       this.$('.externaldp').append(externalDPTemplate);
-   
+
      var externaljsTemplate = this.renderTemplate('externaljs',{});
      this.$('.externallib').append(externaljsTemplate);
-  
+
       var nowTemp = new Date();
       var month = nowTemp.getMonth() + 1;
        month = (month <10)? '0'+month:month;
@@ -152,9 +153,9 @@ var updateTaimeEntry ={};
       var customeSelectEndTemplate = this.renderTemplate('customeselectbox',{defval:'End Time', id:'menendVal'});
       this.$('.menEnd').append(customeSelectEndTemplate);
       this.$('.menEnd ul').html('<li><a tabindex="-1" href="#" data-option="0">End Time</a></li>'+ this._addLiOptions(15));
-      
+
       this.ajax('getAutoTimeEntry');
-     
+
     },
 
     appActivated : function(data){
@@ -196,7 +197,7 @@ var updateTaimeEntry ={};
             this._timeEntry(this.$('.menualTimer textarea').val(), this.$('#menstartVal').val(), this.$('#menendVal').val());
           }
        this.$('.automaticTimer').hide();
-       this.$('.menualTimer').hide();  
+       this.$('.menualTimer').hide();
     },
 
     handleTimeEntry:function(data){
@@ -240,9 +241,9 @@ var updateTaimeEntry ={};
 
     handleGetAutoTimeEntry:function(data){
 
-   
-     
-     
+
+
+
       if(data.startTime){
         this.$('.menual').hide();
         this.$('.disabledMenual').show();
@@ -275,7 +276,7 @@ var updateTaimeEntry ={};
      var customefieldsTemplate = this.renderTemplate('customefields',{customFields:data});
      this.$('.customeFieldsnew').append(customefieldsTemplate);
 
-     
+
     },
 
     handleTargetFail :function(data){
@@ -292,7 +293,7 @@ var updateTaimeEntry ={};
       updateTaimeEntry.hour = this._workHours( updateTaimeEntry.startTime, updateTaimeEntry.endTime);
 
       updateTaimeEntry.id = this.$('.edited').attr('id');
-       
+
       this.$('.edited .hour').text(updateTaimeEntry.hour);
       this.ajax('updateTimeEntry');
     },
@@ -307,7 +308,7 @@ var updateTaimeEntry ={};
         this.ajax('updateTaskType');
     },
 
-     
+
     _saveAutoStartTime:function(){
       var fieldsVal = '';
       var self = this;
@@ -337,7 +338,7 @@ var updateTaimeEntry ={};
         }
       }
       return str;
-     
+
     },
 
 
@@ -347,13 +348,13 @@ var updateTaimeEntry ={};
 
         var startH = (start.substring(0,1) > 0)? start.substring(0,2): start.substring(1,2);
         var endH = (end.substring(0,1) >0)? end.substring(0,2): end.substring(1,2);
-       
+
         start = start.substring(3);
         end = end.substring(3);
         var startM = (start.substring(0,1) > 0)? start.substring(0,2): start.substring(1,2);
         var endM =  (end.substring(0,1) > 0)? end.substring(0,2) : end.substring(1,2);
         var workH=0, workM=0 ,em = 0, sm = 0;
-        
+
        if(startLock === endLock ){
 
             startH = (startH === '12')? 0: startH*1;
@@ -368,7 +369,7 @@ var updateTaimeEntry ={};
             else {
                 if(startM < endM)
                   workH =  (endM - startM)/60;
-                else  
+                else
                   workH = (24*60-((startH*60+startM*1) - (endH*60+endM*1)))/60;
             }
 
@@ -426,7 +427,7 @@ var updateTaimeEntry ={};
         var updEndTemplate = this.renderTemplate('customeselectbox',{defval: end, id:'updEndVal' });
         this.$('.updEnd').eq(0).html(updEndTemplate);
         this.$('.updEnd').eq(0).find('ul').html(this._addLiOptions(15));
-         
+
         var customefieldsTemplate = this.renderTemplate('customefields',{});
         this.$('.timeentryCont .taskType').eq(0).append(customefieldsTemplate);
        // this.$('.timeentryCont .taskType').eq(0).find('select').val(taskName);
@@ -442,13 +443,13 @@ var updateTaimeEntry ={};
         this.$('.menEnd').html('');
         this.$('.menEnd').html(customeSelectEndTemplate);
         this.$('.menEnd ul').html('<li><a tabindex="-1" href="#" data-option="0">End Time</a></li>'+ this._addLiOptions(15));
-         
+
          this.$('.menualTimer').hide();
          this.$('.customeFields select').val('');
-         
+
        }
        else alert('Please fill in all fields!');
-        
+
     },
 
    _taskType:function(parent){
@@ -493,10 +494,10 @@ var updateTaimeEntry ={};
             task.contractRate = self.$(parent.selector).find('.rateType').find('input').val();
         }
        }
-       
+
         return task;
     }
-   
+
   };
 
 }());
